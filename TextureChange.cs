@@ -4,35 +4,28 @@ using UnityEngine;
 
 public class TextureChange : MonoBehaviour {
 
-    // Try doing it by a list? Like, if I add one, I can add another and another and ...
     public Sprite mySprite1;
-    public Sprite mySprite2;
-    public Sprite mySprite3;
-    public Sprite mySprite4;
 
+    // And done with a list!
+    [SerializeField] List<Sprite> mySprites = new List<Sprite>();
 
     // Start is called before the first frame update
     void Start() {
-
     }
 
     // Update is called once per frame
     void Update() {
-        if (Input.GetKeyDown(KeyCode.W)) {
+        if (Input.GetKeyDown(KeyCode.Space)) {
             GetComponent<SpriteRenderer>().sprite = mySprite1;
-            Debug.Log("KEYCODE.W!");
+            Debug.Log("KEYCODE.SPACE!");
         }
-        if (Input.GetKeyDown(KeyCode.A)) {
-            GetComponent<SpriteRenderer>().sprite = mySprite2;
-            Debug.Log("KEYCODE.A!");
-        }
-        if (Input.GetKeyDown(KeyCode.S)) {
-            GetComponent<SpriteRenderer>().sprite = mySprite3;
-            Debug.Log("KEYCODE.S!");
-        }
-        if (Input.GetKeyDown(KeyCode.D)) {
-            GetComponent<SpriteRenderer>().sprite = mySprite4;
-            Debug.Log("KEYCODE.D!");
+        if (Input.GetKeyDown(KeyCode.W)) {
+            int random = Random.Range(0, mySprites.Count);
+            while (mySprites[random] == GetComponent<SpriteRenderer>().sprite) {
+                random = Random.Range(0, mySprites.Count);
+            }
+            GetComponent<SpriteRenderer>().sprite = mySprites[random];
+            Debug.Log("KEYCODE.W! Sprite name: " + GetComponent<SpriteRenderer>().sprite.name);
         }
     }
 }
