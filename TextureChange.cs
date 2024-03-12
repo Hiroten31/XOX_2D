@@ -25,6 +25,16 @@ public class TextureChange : MonoBehaviour {
                 random = Random.Range(0, mySprites.Count);
             }
             GetComponent<SpriteRenderer>().sprite = mySprites[random];
+            if(random%2  == 0) {
+                GetComponent<SpriteRenderer>().flipX = true;
+            } else {
+                GetComponent<SpriteRenderer>().flipX = false;
+            }
+            if (random % 3 == 0) {
+                GetComponent<SpriteRenderer>().flipY = true;
+            } else {
+                GetComponent<SpriteRenderer>().flipY = false;
+            }
             Debug.Log("KEYCODE.W! Sprite name: " + GetComponent<SpriteRenderer>().sprite.name);
         }
     }
