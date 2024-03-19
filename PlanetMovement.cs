@@ -42,8 +42,8 @@ public class PlanetMovement : MonoBehaviour {
         //Random scale is need to properly calculate secondAnchor coordinates.
         scale = Random.Range(0.1f, 0.8f);
         transform.localScale = new Vector3(scale, scale, 0);
-        firstAnchorX = Random.Range(-8.89f, 8.89f);
-        firstAnchorY = Random.Range(-5f, 5f);
+        firstAnchorX = Random.Range(-7f, 7f);
+        firstAnchorY = Random.Range(-4f, 4f);
 
         //0.1 scale takes up around 1 square of coordinates
         float planetSize = scale * 10;
@@ -51,7 +51,7 @@ public class PlanetMovement : MonoBehaviour {
         //Making second anchor out of visible area
         do {
             secondAnchorX = Random.Range(-14f, 14f);
-        } while (secondAnchorX > (-8.89) && secondAnchorX < (8.89));
+        } while (secondAnchorX > (-9) && secondAnchorX < (9));
 
         do {
             secondAnchorY = Random.Range(-11f, 11f);
@@ -64,10 +64,20 @@ public class PlanetMovement : MonoBehaviour {
         speed = Random.Range(0.08f, 0.5f);
         rotation = Random.Range(0f, 360f);
 
+        //Taking the middle between two anchors
         radius = Mathf.Sqrt(Mathf.Pow(secondAnchorX - firstAnchorX, 2) + Mathf.Pow(secondAnchorY - firstAnchorY, 2));
-        radius = (radius / 2) + scale * 10;
-        startLocX = firstAnchorX;
-        startLocY = firstAnchorY;
+        radius /= 2;
+        //Start location is between the two points
+        startLocX = (secondAnchorX + firstAnchorX) / 2;
+        startLocY = (secondAnchorY + firstAnchorY) / 2;
+        //Angle set to start from secondAnchor.
+        /*firstVector = new(firstAnchorX, firstAnchorY);
+        secondVector = new(secondAnchorX, secondAnchorY);
+        //angle = Vector2.Angle(secondVector, firstVector);
+        angle = Mathf.Atan2(firstVector.x, secondVector.y);
+        Debug.Log("angle = " + angle);*/
+
+        angle = 0f;
     }
 
     private void Start() {
