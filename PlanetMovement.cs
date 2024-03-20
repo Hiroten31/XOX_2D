@@ -67,16 +67,12 @@ public class PlanetMovement : MonoBehaviour {
         //Taking the middle between two anchors
         radius = Mathf.Sqrt(Mathf.Pow(secondAnchorX - firstAnchorX, 2) + Mathf.Pow(secondAnchorY - firstAnchorY, 2));
         radius /= 2;
+
         //Start location is between the two points
         startLocX = (secondAnchorX + firstAnchorX) / 2;
         startLocY = (secondAnchorY + firstAnchorY) / 2;
-        //Angle set to start from secondAnchor.
-        /*firstVector = new(firstAnchorX, firstAnchorY);
-        secondVector = new(secondAnchorX, secondAnchorY);
-        //angle = Vector2.Angle(secondVector, firstVector);
-        angle = Mathf.Atan2(firstVector.x, secondVector.y);
-        Debug.Log("angle = " + angle);*/
 
+        //Set angle to proper value to make it at exactly at secondAnchor coordinates
         angle = 0f;
     }
 
@@ -89,6 +85,15 @@ public class PlanetMovement : MonoBehaviour {
         // A methods to make planet properly move around.
         float x = startLocX + Mathf.Cos(angle) * radius;
         float y = startLocY + Mathf.Sin(angle) * radius;
+        if((transform.position.x > secondAnchorX - 0.005 && transform.position.x < secondAnchorX + 0.005) && (transform.position.y > secondAnchorY - 0.005 && transform.position.y < secondAnchorY + 0.005)) {
+            Debug.Log("Check X/Y, angle = " + angle);
+            Debug.Log("Mathf.Atan2 angle = " + Mathf.Atan2(secondAnchorX, secondAnchorY));
+            Vector2 firstVector = new Vector2(firstAnchorX, firstAnchorY);
+            Vector2 secondVector = new Vector2(secondAnchorX, secondAnchorY);
+            Debug.Log("Vectors angle = " + Vector2.Angle(firstVector, secondVector));
+            Debug.Log("Vectors - zero angle = " + Vector2.Angle(Vector2.zero, secondVector));
+
+        }
         transform.SetPositionAndRotation(new Vector3(x, y, 0), Quaternion.Euler(0, 0, rotation + angle * 20));
         angle += speed * Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.R)){
