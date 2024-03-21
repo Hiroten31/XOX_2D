@@ -45,17 +45,17 @@ public class PlanetMovement : MonoBehaviour {
         firstAnchorX = Random.Range(-7f, 7f);
         firstAnchorY = Random.Range(-4f, 4f);
 
-        //0.1 scale takes up around 1 square of coordinates
-        float planetSize = scale * 10;
+        //1 scale takes up around 10 square of coordinates - so we need to make it half a planet futher, so it will fit in non-visible area
+        float planetSize = scale * 5;
 
         //Making second anchor out of visible area
         do {
-            secondAnchorX = Random.Range(-14f, 14f);
-        } while (secondAnchorX > (-9) && secondAnchorX < (9));
+            secondAnchorX = Random.Range(-14f - planetSize, 14f + planetSize);
+        } while (secondAnchorX > (-9 - planetSize) && secondAnchorX < (9 + planetSize));
 
         do {
-            secondAnchorY = Random.Range(-11f, 11f);
-        } while (secondAnchorY > (-5) && secondAnchorY < (5));
+            secondAnchorY = Random.Range(-11f - planetSize, 11f + planetSize);
+        } while (secondAnchorY > (-5 - planetSize) && secondAnchorY < (5 + planetSize));
 
         firstAnchor.transform.position = new Vector3(firstAnchorX, firstAnchorY, 0);
         secondAnchor.transform.position = new Vector3(secondAnchorX, secondAnchorY, 0);
@@ -72,8 +72,12 @@ public class PlanetMovement : MonoBehaviour {
         startLocX = (secondAnchorX + firstAnchorX) / 2;
         startLocY = (secondAnchorY + firstAnchorY) / 2;
 
+
         //Set angle to proper value to make it at exactly at secondAnchor coordinates
-        angle = 0f;
+        angle = Mathf.Acos((secondAnchorX - startLocX) / radius);
+        if (secondAnchorY < 0) {
+            angle = -1 * angle;
+        }
     }
 
     private void Start() {
@@ -85,15 +89,6 @@ public class PlanetMovement : MonoBehaviour {
         // A methods to make planet properly move around.
         float x = startLocX + Mathf.Cos(angle) * radius;
         float y = startLocY + Mathf.Sin(angle) * radius;
-        if((transform.position.x > secondAnchorX - 0.005 && transform.position.x < secondAnchorX + 0.005) && (transform.position.y > secondAnchorY - 0.005 && transform.position.y < secondAnchorY + 0.005)) {
-            Debug.Log("Check X/Y, angle = " + angle);
-            Debug.Log("Mathf.Atan2 angle = " + Mathf.Atan2(secondAnchorX, secondAnchorY));
-            Vector2 firstVector = new Vector2(firstAnchorX, firstAnchorY);
-            Vector2 secondVector = new Vector2(secondAnchorX, secondAnchorY);
-            Debug.Log("Vectors angle = " + Vector2.Angle(firstVector, secondVector));
-            Debug.Log("Vectors - zero angle = " + Vector2.Angle(Vector2.zero, secondVector));
-
-        }
         transform.SetPositionAndRotation(new Vector3(x, y, 0), Quaternion.Euler(0, 0, rotation + angle * 20));
         angle += speed * Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.R)){
