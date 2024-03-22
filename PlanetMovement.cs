@@ -7,92 +7,77 @@ using UnityEngine;
 
 public class PlanetMovement : MonoBehaviour {
 
+    /// <summary>
+    /// Our object (planet) that will move around in background.
+    /// </summary>
     public Transform target;
-    public Transform firstAnchor;
-    public Transform secondAnchor;
-    public float speed;
-    public float radius;
-    public float angle = 0f;
-    public float scale;
-    public float rotation;
 
-    //Two anchor point?
-    //First: randomly placed in visible area
-    //Second: randomly placed in not visible area + random scale futher from closest border
-    //Radius = distance between first and second
-    //Angle = set to opposite side of second anchor
-    //Speed = random
-    //Spawn every ## seconds
-    //Despawn after reaching Second anchor.
-    public float firstAnchorX;
-    public float firstAnchorY;
+    // Vectors to correctly set the center of gravity.
+    Vector2 firstAnchor;
+    Vector2 centerAnchor;
+    Vector2 secondAnchor;
 
-    public float secondAnchorX;
-    public float secondAnchorY;
+    // Random values in reasonable ranges.
+    float speed;
+    float radius;
+    float scale;
+    float rotation;
 
-    //Location based on two randomly got anchor points
-    public float startLocX;
-    public float startLocY;
+    // Variable that controls at which point of trajectory our planet is.
+    float angle;
 
-
-    //Set Anchor of a planet outside the visible area
-    //Set radius based on anchor point distance from border and scale of planet
-    //Speed and scale can be random
-    void GetRandomValues() {
-        //Random scale is need to properly calculate secondAnchor coordinates.
-        scale = Random.Range(0.1f, 0.8f);
-        transform.localScale = new Vector3(scale, scale, 0);
-        firstAnchorX = Random.Range(-7f, 7f);
-        firstAnchorY = Random.Range(-4f, 4f);
-
-        //1 scale takes up around 10 square of coordinates - so we need to make it half a planet futher, so it will fit in non-visible area
-        float planetSize = scale * 5;
-
-        //Making second anchor out of visible area
-        do {
-            secondAnchorX = Random.Range(-14f - planetSize, 14f + planetSize);
-        } while (secondAnchorX > (-9 - planetSize) && secondAnchorX < (9 + planetSize));
-
-        do {
-            secondAnchorY = Random.Range(-11f - planetSize, 11f + planetSize);
-        } while (secondAnchorY > (-5 - planetSize) && secondAnchorY < (5 + planetSize));
-
-        firstAnchor.transform.position = new Vector3(firstAnchorX, firstAnchorY, 0);
-        secondAnchor.transform.position = new Vector3(secondAnchorX, secondAnchorY, 0);
-
-        //Random
+    // Method to get a new set of values for our object.
+    void GetNewSetOfValues() {
+        // Random values.
         speed = Random.Range(0.08f, 0.5f);
         rotation = Random.Range(0f, 360f);
 
-        //Taking the middle between two anchors
-        radius = Mathf.Sqrt(Mathf.Pow(secondAnchorX - firstAnchorX, 2) + Mathf.Pow(secondAnchorY - firstAnchorY, 2));
+        // Value of object size (scale).
+        scale = Random.Range(0.1f, 0.8f);
+
+        // Planet of 0.1 scale is taking up 1 square, so 0.5 in every direction from the center.
+        float planetSize = scale * 5;
+
+        // Setting firstAnchor in visible range exluding borders.
+        firstAnchor.x = Random.Range(-7f, 7f);
+        firstAnchor.y = Random.Range(-4f, 4f);
+
+        // Setting secondAnchor in non-visible range including planetSize.
+        do {
+            secondAnchor.x = Random.Range(-14f - planetSize, 14f + planetSize);
+            secondAnchor.y = Random.Range(-11f - planetSize, 11f + planetSize);
+        } while ((secondAnchor.x > (-9 - planetSize) && secondAnchor.x < (9 + planetSize)) && (secondAnchor.y > (-5 - planetSize) && secondAnchor.y < (5 + planetSize)));
+
+        // Calculating the middle point between our two anchors.
+        centerAnchor.x = (secondAnchor.x + firstAnchor.x) / 2;
+        centerAnchor.y = (secondAnchor.y + firstAnchor.y) / 2;
+
+        // Getting radius from our given anchors.
+        radius = Mathf.Sqrt(Mathf.Pow(secondAnchor.x - firstAnchor.x, 2) + Mathf.Pow(secondAnchor.y - firstAnchor.y, 2));
         radius /= 2;
 
-        //Start location is between the two points
-        startLocX = (secondAnchorX + firstAnchorX) / 2;
-        startLocY = (secondAnchorY + firstAnchorY) / 2;
-
-
-        //Set angle to proper value to make it at exactly at secondAnchor coordinates
-        angle = Mathf.Acos((secondAnchorX - startLocX) / radius);
-        if (secondAnchorY < 0) {
+        // Setting angle to proper value to make it exactly at secondAnchor coordinates (off-screen).
+        angle = Mathf.Acos((secondAnchor.x - centerAnchor.x) / radius);
+        if (secondAnchor.y < 0) {
             angle = -1 * angle;
         }
+
+        // Making scale as last to avoid fliching size in visible area.
+        transform.localScale = new Vector2(scale, scale);
     }
 
     private void Start() {
-        GetRandomValues();
+        GetNewSetOfValues();
     }
 
-    // Update is called once per frame
     void Update() {
-        // A methods to make planet properly move around.
-        float x = startLocX + Mathf.Cos(angle) * radius;
-        float y = startLocY + Mathf.Sin(angle) * radius;
-        transform.SetPositionAndRotation(new Vector3(x, y, 0), Quaternion.Euler(0, 0, rotation + angle * 20));
+        // Using cos() and sin() methods to make planet properly move around in circle.
+        float x = centerAnchor.x + Mathf.Cos(angle) * radius;
+        float y = centerAnchor.y + Mathf.Sin(angle) * radius;
+        transform.SetPositionAndRotation(new Vector2(x, y), Quaternion.Euler(0, 0, rotation + angle * 20));
         angle += speed * Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.R)){
-            GetRandomValues();
+            GetNewSetOfValues();
         }
     }
 }
