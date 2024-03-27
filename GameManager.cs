@@ -7,19 +7,16 @@ public class GameManager : MonoBehaviour {
 
     public int gridSize = 3;
 
-    public void OnEnable() {
-        Debug.Log("Dzialaj prosze...");
-    }
-
     public void Awake() {
         Instance = this;
     }
 
-    public void SetGridSize(int size) {
+    public static void SetGridSize(int size) {
         Instance.gridSize = size;
     }
 
     public static int GetGridSize() {
+        Instance.gridSize = SliderScript.value;
         return Instance.gridSize;
     }
 }
