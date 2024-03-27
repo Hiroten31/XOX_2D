@@ -7,7 +7,8 @@ public class GridManager : MonoBehaviour {
 
     public Dictionary<Vector2, Tile> _tiles;
 
-    public void GenerateGrid(int _square) {
+    public void GenerateGrid() {
+        int _square = GameManager.GetGridSize();
         float offsetPosition = _square / 2;
         if (_square % 2 == 0) {
             offsetPosition -= 0.5f;
