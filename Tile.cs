@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 
 public class Tile : MonoBehaviour {
@@ -10,6 +11,8 @@ public class Tile : MonoBehaviour {
     [SerializeField] private GameObject _O;
     [SerializeField] private GameObject _X;
 
+    private bool tileSet = false;
+
     public void Init(bool isOffset) { 
         _renderer.color = isOffset ? _offsetColor : _baseColor;
     }
@@ -19,12 +22,16 @@ public class Tile : MonoBehaviour {
     }
 
     private void OnMouseDown() {
-        if (_O.activeSelf == false) {
-            _O.SetActive(true);
-            _X.SetActive(false);
+        if (tileSet == false) {
+            if (GameManager.playerTurn) {
+                _X.SetActive(true);
+            } else {
+                _O.SetActive(true);
+            }
+            tileSet = true;
+            GameManager.playerTurn = !GameManager.playerTurn;
         } else {
-            _X.SetActive(true);
-            _O.SetActive(false);
+            Debug.Log(this.name + " is already set!");
         }
     }
 
