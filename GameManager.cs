@@ -7,6 +7,10 @@ public class GameManager : MonoBehaviour {
 
     public int gridSize = 3;
 
+    // false as "O"
+    // true as "X"
+    public static bool playerTurn = false;
+
     public void Awake() {
         Instance = this;
     }
