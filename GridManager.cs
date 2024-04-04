@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GridManager : MonoBehaviour {
@@ -30,5 +31,19 @@ public class GridManager : MonoBehaviour {
         if (_tiles.TryGetValue(position, out Tile tile))
             return tile;
         return null;
+    }
+
+    public static bool CheckIfWin(Tile clickedTile) {
+        Vector2 tilePosition = clickedTile.transform.position;
+        // Checking horizontal line
+        for(int i = 0; i < GameManager.GetGridSize(); i++) {
+            
+        }
+        // Checking vertical line
+        for (int i = 0; i < GameManager.GetGridSize(); i++) {
+
+        }
+        Debug.Log("clickedTile, x: " + tilePosition.x + ", y: " + tilePosition.y);
+        return true;
     }
 }
