@@ -21,6 +21,8 @@ public class Tile : MonoBehaviour {
         _highlight.SetActive(true);
     }
 
+    // false as "O"
+    // true as "X"
     private void OnMouseDown() {
         if (tileSet == false) {
             if (GameManager.playerTurn) {
@@ -29,6 +31,7 @@ public class Tile : MonoBehaviour {
                 _O.SetActive(true);
             }
             tileSet = true;
+            GridManager.CheckIfWin(this);
             GameManager.playerTurn = !GameManager.playerTurn;
         } else {
             Debug.Log(this.name + " is already set!");
