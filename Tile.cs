@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 
@@ -40,5 +41,15 @@ public class Tile : MonoBehaviour {
 
     private void OnMouseExit() {
         _highlight.SetActive(false);
+    }
+
+    public bool GetTileState(Tile tileUnderCheck) {
+        if (tileUnderCheck._X.activeSelf == true && this._X.activeSelf == true) {
+            return true;
+        } else if (tileUnderCheck._O.activeSelf == true && this._O.activeSelf == true) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
