@@ -6,7 +6,7 @@ public class GridManager : MonoBehaviour {
 
     [SerializeField] private Tile _tilePrefab;
 
-    public Dictionary<Vector2, Tile> _tiles;
+    public static Dictionary<Vector2, Tile> _tiles;
 
     public void GenerateGrid() {
         int _square = GameManager.GetGridSize();
@@ -18,11 +18,11 @@ public class GridManager : MonoBehaviour {
         for (int x = 0; x < _square; x++) {
             for (int y = 0; y < _square; y++) {
                 var spawnedTile = Instantiate(_tilePrefab, new Vector2(x - offsetPosition, y - offsetPosition), Quaternion.identity);
-                spawnedTile.name = $"Tile {x} {y}";
+                spawnedTile.name = $"Tile {x - offsetPosition} {y - offsetPosition}";
                 var isOffset = (x % 2 == 0 && y % 2 != 0) || (x % 2 != 0 && y % 2 == 0);
                 spawnedTile.Init(isOffset);
                 Debug.Log("Tile: " + spawnedTile + ", name: " + spawnedTile.name);
-                _tiles[new Vector2(x, y)] = spawnedTile;
+                _tiles[new Vector2(x - offsetPosition, y - offsetPosition)] = spawnedTile;
             }
         }
     }
@@ -35,9 +35,17 @@ public class GridManager : MonoBehaviour {
 
     public static bool CheckIfWin(Tile clickedTile) {
         Vector2 tilePosition = clickedTile.transform.position;
+
         // Checking horizontal line
-        for(int i = 0; i < GameManager.GetGridSize(); i++) {
-            
+        for (int i = 0; i < GameManager.GetGridSize(); i++) {
+            // Here I have to do something with the fact of for loop range (0, GridSize) and
+            // the fact that I operate of Tiles that are moved...
+            //
+            // or just DELETE OFFSET IN _TILES!!!
+            Tile readTile = _tiles[new Vector2(0, 0)];
+            if (clickedTile.GetTileState(readTile)) {
+                Debug.Log("Zgadza sie!");
+            };
         }
         // Checking vertical line
         for (int i = 0; i < GameManager.GetGridSize(); i++) {
