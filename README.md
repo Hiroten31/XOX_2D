@@ -3,7 +3,7 @@
 
 
 It is simple project to gradually get into world of game development. So far so good. My journey until now:
-1. week)
+### First week
 - Creating a project
 - Adding a background
 - Making first C# script to change sprite and properties of the background on key click
@@ -11,7 +11,7 @@ It is simple project to gradually get into world of game development. So far so 
 - Deciding on the methods to use
 </links>
 
-2. week)
+### Second week
 - Fighting with proper placement of the planet
 - Trying out different methods and making them move using Update() function and math's sin() and cos()
 - Figuring out how to calculate right angle to spawn planet outside of vidible area (Acos()) - very nerve breaking
@@ -19,15 +19,19 @@ It is simple project to gradually get into world of game development. So far so 
 - First attempts of grid generation
 </links>
 
-3. week)
+### Third week
 - Adding buttons to make menu for players
 - Trying out to use global variables for settings
 - Implementing GameManager, slider to set-up grid size
 - Upgrading grid generator and tile actions as placing X's and O's
 </links>
 
+### Fourth week
+- A little break due to easter 🐣 holidays!
+- Slowly implementing logic to check if placing X or O was a winning move for a player
+- Considered refactoring GridManager to static class for better practice (like in GameManager)
 
-# Screens (in work)
+# Screenshots (in work)
 
 ### Gameplay scene set-up
 ![image](https://github.com/Hiroten31/XOX_2D/assets/97809912/a2667ce4-c611-4609-b832-96b7e6b8cb65)
