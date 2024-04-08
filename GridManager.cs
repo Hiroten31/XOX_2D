@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.Collections.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -8,23 +9,33 @@ public class GridManager : MonoBehaviour {
 
     public static Dictionary<Vector2, Tile> _tiles;
 
-    public void GenerateGrid() {
+    public static float GetOffset() {
         int _square = GameManager.GetGridSize();
         float offsetPosition = _square / 2;
         if (_square % 2 == 0) {
             offsetPosition -= 0.5f;
         }
+        return offsetPosition;
+    }
+
+    public void GenerateGrid() {
+        int _square = GameManager.GetGridSize();
+        float offsetPosition = GetOffset();
         _tiles = new Dictionary<Vector2, Tile>();
-        for (int x = 0; x < _square; x++) {
-            for (int y = 0; y < _square; y++) {
-                var spawnedTile = Instantiate(_tilePrefab, new Vector2(x - offsetPosition, y - offsetPosition), Quaternion.identity);
-                spawnedTile.name = $"Tile {x - offsetPosition} {y - offsetPosition}";
+        for (float x = 0-offsetPosition; x < _square; x++) {
+            for (float y = 0-offsetPosition; y < _square; y++) {
+                var spawnedTile = Instantiate(_tilePrefab, new Vector2(x , y), Quaternion.identity);
+                spawnedTile.name = $"Tile {x} {y}";
                 var isOffset = (x % 2 == 0 && y % 2 != 0) || (x % 2 != 0 && y % 2 == 0);
                 spawnedTile.Init(isOffset);
                 Debug.Log("Tile: " + spawnedTile + ", name: " + spawnedTile.name);
-                _tiles[new Vector2(x - offsetPosition, y - offsetPosition)] = spawnedTile;
+                _tiles[new Vector2(x, y)] = spawnedTile;
             }
         }
+
+        /*foreach (var (key, value) in _tiles) {
+            Debug.Log("a Tile key: " + key);
+        }*/
     }
 
     public Tile GetTileAtPosition(Vector2 position) {
@@ -34,24 +45,39 @@ public class GridManager : MonoBehaviour {
     }
 
     public static bool CheckIfWin(Tile clickedTile) {
-        Vector2 tilePosition = clickedTile.transform.position;
-
+        float offsetPosition = GetOffset();
+        int gridSize = GameManager.GetGridSize();
+        int win = 0;
         // Checking horizontal line
-        for (int i = 0; i < GameManager.GetGridSize(); i++) {
-            // Here I have to do something with the fact of for loop range (0, GridSize) and
-            // the fact that I operate of Tiles that are moved...
-            //
-            // or just DELETE OFFSET IN _TILES!!!
-            Tile readTile = _tiles[new Vector2(0, 0)];
+        for (float i = 0-offsetPosition; i < GameManager.GetGridSize(); i++) {
+            Tile readTile = _tiles[new Vector2(i, clickedTile.transform.position.y)];
             if (clickedTile.GetTileState(readTile)) {
-                Debug.Log("Zgadza sie!");
+                Debug.Log("Horizontal: " + clickedTile.transform.position.x + " " + clickedTile.transform.position.y + " = " + readTile.transform.position.x + " " + readTile.transform.position.y);
+                win++;
+                Debug.Log("=================" + win);
+                if (win == gridSize) {
+                    Debug.Log("YOU WON!");
+                    break;
+                }
+            }
+
+        }
+        win = 0;
+        // Checking vertical line
+        for (float i = 0-offsetPosition; i < GameManager.GetGridSize(); i++) {
+            win = 0;
+            Tile readTile = _tiles[new Vector2(clickedTile.transform.position.x, i)];
+            if (clickedTile.GetTileState(readTile)) {
+                Debug.Log("Vertical: " + clickedTile.transform.position.x + " " + clickedTile.transform.position.y + " = " + readTile.transform.position.x + " " + readTile.transform.position.y);
+                win++;
+                Debug.Log("=================" + win);
+                if (win == gridSize) {
+                    Debug.Log("YOU WON!");
+                    break;
+                }
             };
         }
-        // Checking vertical line
-        for (int i = 0; i < GameManager.GetGridSize(); i++) {
-
-        }
-        Debug.Log("clickedTile, x: " + tilePosition.x + ", y: " + tilePosition.y);
+        Debug.Log("clickedTile, x: " + clickedTile.transform.position.x + ", y: " + clickedTile.transform.position.y);
         return true;
     }
 }
