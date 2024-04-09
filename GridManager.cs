@@ -7,29 +7,26 @@ public class GridManager : MonoBehaviour {
 
     [SerializeField] private Tile _tilePrefab;
 
-    public static Dictionary<Vector2, Tile> _tiles;
+    private static Dictionary<Vector2, Tile> _tiles;
 
-    public static float GetOffset() {
-        int _square = GameManager.GetGridSize();
-        float offsetPosition = _square / 2;
+    private static int _square;
+    private static float offsetPosition;
+
+    public void GenerateGrid() {
+        _square = GameManager.GetGridSize();
+        offsetPosition = _square / 2;
         if (_square % 2 == 0) {
             offsetPosition -= 0.5f;
         }
-        return offsetPosition;
-    }
-
-    public void GenerateGrid() {
-        int _square = GameManager.GetGridSize();
-        float offsetPosition = GetOffset();
         _tiles = new Dictionary<Vector2, Tile>();
-        for (float x = 0-offsetPosition; x < _square; x++) {
-            for (float y = 0-offsetPosition; y < _square; y++) {
-                var spawnedTile = Instantiate(_tilePrefab, new Vector2(x , y), Quaternion.identity);
-                spawnedTile.name = $"Tile {x} {y}";
+        for (float x = 0; x < _square; x++) {
+            for (float y = 0; y < _square; y++) {
+                var spawnedTile = Instantiate(_tilePrefab, new Vector2(x - offsetPosition, y - offsetPosition), Quaternion.identity);
+                spawnedTile.name = $"Tile {x - offsetPosition} {y - offsetPosition}";
                 var isOffset = (x % 2 == 0 && y % 2 != 0) || (x % 2 != 0 && y % 2 == 0);
                 spawnedTile.Init(isOffset);
-                Debug.Log("Tile: " + spawnedTile + ", name: " + spawnedTile.name);
-                _tiles[new Vector2(x, y)] = spawnedTile;
+                //Debug.Log("Tile: " + spawnedTile + ", name: " + spawnedTile.name);
+                _tiles[new Vector2(x - offsetPosition, y - offsetPosition)] = spawnedTile;
             }
         }
 
@@ -45,17 +42,16 @@ public class GridManager : MonoBehaviour {
     }
 
     public static bool CheckIfWin(Tile clickedTile) {
-        float offsetPosition = GetOffset();
-        int gridSize = GameManager.GetGridSize();
         int win = 0;
+
         // Checking horizontal line
-        for (float i = 0-offsetPosition; i < GameManager.GetGridSize(); i++) {
-            Tile readTile = _tiles[new Vector2(i, clickedTile.transform.position.y)];
+        for (float i = 0; i < GameManager.GetGridSize(); i++) {
+            Tile readTile = _tiles[new Vector2(i - offsetPosition, clickedTile.transform.position.y)];
             if (clickedTile.GetTileState(readTile)) {
-                Debug.Log("Horizontal: " + clickedTile.transform.position.x + " " + clickedTile.transform.position.y + " = " + readTile.transform.position.x + " " + readTile.transform.position.y);
+                //Debug.Log("Horizontal: " + clickedTile.transform.position.x + " " + clickedTile.transform.position.y + " = " + readTile.transform.position.x + " " + readTile.transform.position.y);
                 win++;
-                Debug.Log("=================" + win);
-                if (win == gridSize) {
+                //Debug.Log("=================" + win);
+                if (win == _square) {
                     Debug.Log("YOU WON!");
                     break;
                 }
@@ -64,20 +60,19 @@ public class GridManager : MonoBehaviour {
         }
         win = 0;
         // Checking vertical line
-        for (float i = 0-offsetPosition; i < GameManager.GetGridSize(); i++) {
-            win = 0;
-            Tile readTile = _tiles[new Vector2(clickedTile.transform.position.x, i)];
+        for (float i = 0; i < GameManager.GetGridSize(); i++) {
+            Tile readTile = _tiles[new Vector2(clickedTile.transform.position.x, i - offsetPosition)];
             if (clickedTile.GetTileState(readTile)) {
-                Debug.Log("Vertical: " + clickedTile.transform.position.x + " " + clickedTile.transform.position.y + " = " + readTile.transform.position.x + " " + readTile.transform.position.y);
+                //Debug.Log("Vertical: " + clickedTile.transform.position.x + " " + clickedTile.transform.position.y + " = " + readTile.transform.position.x + " " + readTile.transform.position.y);
                 win++;
-                Debug.Log("=================" + win);
-                if (win == gridSize) {
+                //Debug.Log("=================" + win);
+                if (win == _square) {
                     Debug.Log("YOU WON!");
                     break;
                 }
             };
         }
-        Debug.Log("clickedTile, x: " + clickedTile.transform.position.x + ", y: " + clickedTile.transform.position.y);
+        //Debug.Log("clickedTile, x: " + clickedTile.transform.position.x + ", y: " + clickedTile.transform.position.y);
         return true;
     }
 }
