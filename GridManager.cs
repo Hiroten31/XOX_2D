@@ -45,7 +45,7 @@ public class GridManager : MonoBehaviour {
         int win = 0;
 
         // Checking horizontal line
-        for (float i = 0; i < GameManager.GetGridSize(); i++) {
+        for (float i = 0; i < _square; i++) {
             Tile readTile = _tiles[new Vector2(i - offsetPosition, clickedTile.transform.position.y)];
             if (clickedTile.GetTileState(readTile)) {
                 //Debug.Log("Horizontal: " + clickedTile.transform.position.x + " " + clickedTile.transform.position.y + " = " + readTile.transform.position.x + " " + readTile.transform.position.y);
@@ -60,7 +60,7 @@ public class GridManager : MonoBehaviour {
         }
         win = 0;
         // Checking vertical line
-        for (float i = 0; i < GameManager.GetGridSize(); i++) {
+        for (float i = 0; i < _square; i++) {
             Tile readTile = _tiles[new Vector2(clickedTile.transform.position.x, i - offsetPosition)];
             if (clickedTile.GetTileState(readTile)) {
                 //Debug.Log("Vertical: " + clickedTile.transform.position.x + " " + clickedTile.transform.position.y + " = " + readTile.transform.position.x + " " + readTile.transform.position.y);
@@ -72,6 +72,35 @@ public class GridManager : MonoBehaviour {
                 }
             };
         }
+        win = 0;
+        // Checking diagonal /
+        for (float i = 0; i < _square; i++) {
+            Tile readTile = _tiles[new Vector2(i - offsetPosition, i - offsetPosition)];
+            if (clickedTile.GetTileState(readTile)) {
+                //Debug.Log("Vertical: " + clickedTile.transform.position.x + " " + clickedTile.transform.position.y + " = " + readTile.transform.position.x + " " + readTile.transform.position.y);
+                win++;
+                //Debug.Log("=================" + win);
+                if (win == _square) {
+                    Debug.Log("YOU WON!");
+                    break;
+                }
+            };
+        }
+        win = 0;
+        // Checking diagonal \
+        for (float i = 0; i < _square; i++) {
+            Tile readTile = _tiles[new Vector2(i - offsetPosition, _square - 1 - offsetPosition - i)];
+            if (clickedTile.GetTileState(readTile)) {
+                //Debug.Log("Vertical: " + clickedTile.transform.position.x + " " + clickedTile.transform.position.y + " = " + readTile.transform.position.x + " " + readTile.transform.position.y);
+                win++;
+                //Debug.Log("=================" + win);
+                if (win == _square) {
+                    Debug.Log("YOU WON!");
+                    break;
+                }
+            };
+        }
+
         //Debug.Log("clickedTile, x: " + clickedTile.transform.position.x + ", y: " + clickedTile.transform.position.y);
         return true;
     }
