@@ -80,6 +80,8 @@ It is a simple project to gradually get into world of game development. So far s
 - Refactor offset with a lot of math checking, apparently for nothing as relative position won't need that
 ```
 </details>
+
+
 # How it works?
 
 
