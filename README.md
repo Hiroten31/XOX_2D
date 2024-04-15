@@ -68,9 +68,18 @@ It is a simple project to gradually get into world of game development. So far s
 ```
 - Did full logic behing checking if player is making a winning move.
   Checking line horizontally, vertically and for both diagonals. (not optimalized)
+- Researched about solutions I want to use to properly scale and position the grid
+- Realized how much code I have to refactor and had a little break(down)...
 ```
 </details>
 
+<details>
+  <summary><h2>Sixth week</h2></summary>
+
+```
+- Refactor offset with a lot of math checking, apparently for nothing as relative position won't need that
+```
+</details>
 # How it works?
 
 
