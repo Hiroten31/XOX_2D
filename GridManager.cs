@@ -22,10 +22,10 @@ public class GridManager : MonoBehaviour {
         _tiles = new Dictionary<Vector2, Tile>();
         for (float x = 0 - offsetPosition; x < _square - offsetPosition; x++) {
             for (float y = 0 - offsetPosition; y < _square - offsetPosition; y++) {
-                var spawnedTile = Instantiate(_tilePrefab, new Vector2(x , y), Quaternion.identity, this.transform);
+                var spawnedTile = Instantiate(_tilePrefab, new Vector2(x, y), Quaternion.identity, this.transform);
                 spawnedTile.name = $"Tile {x} {y}";
                 bool isOffset;
-                if(_square % 2 == 0) {
+                if (_square % 2 == 0) {
                     isOffset = ((x + y) % 2 == 0);
                 } else {
                     isOffset = (x % 2 == 0 && y % 2 != 0) || (x % 2 != 0 && y % 2 == 0);
@@ -35,7 +35,8 @@ public class GridManager : MonoBehaviour {
                 _tiles[new Vector2(x, y)] = spawnedTile;
             }
         }
-
+        this.transform.position = new Vector2(-4, 0);
+        this.transform.localScale = new Vector2(9f / _square, 9f / _square);
         /*foreach (var (key, value) in _tiles) {
             Debug.Log("a Tile key: " + key);
         }*/
@@ -52,7 +53,7 @@ public class GridManager : MonoBehaviour {
 
         // Checking horizontal line
         for (float i = 0 - offsetPosition; i < _square - offsetPosition; i++) {
-            Tile readTile = _tiles[new Vector2(i, clickedTile.transform.position.y)];
+            Tile readTile = _tiles[new Vector2(i, clickedTile.transform.localPosition.y)];
             if (clickedTile.GetTileState(readTile)) {
                 //Debug.Log("Horizontal: " + clickedTile.transform.position.x + " " + clickedTile.transform.position.y + " = " + readTile.transform.position.x + " " + readTile.transform.position.y);
                 win++;
@@ -67,7 +68,7 @@ public class GridManager : MonoBehaviour {
         win = 0;
         // Checking vertical line
         for (float i = 0 - offsetPosition; i < _square - offsetPosition; i++) {
-            Tile readTile = _tiles[new Vector2(clickedTile.transform.position.x, i)];
+            Tile readTile = _tiles[new Vector2(clickedTile.transform.localPosition.x, i)];
             if (clickedTile.GetTileState(readTile)) {
                 //Debug.Log("Vertical: " + clickedTile.transform.position.x + " " + clickedTile.transform.position.y + " = " + readTile.transform.position.x + " " + readTile.transform.position.y);
                 win++;
