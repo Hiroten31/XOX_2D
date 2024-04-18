@@ -78,6 +78,8 @@ It is a simple project to gradually get into world of game development. So far s
 
 ```
 - Refactor offset with a lot of math checking, apparently for nothing as relative position won't need that
+- Added proper grid positioning (to the right side) and scaling with number of tiles
+- Added a text box, buttons and diplays for proper and clear game control
 ```
 </details>
 
