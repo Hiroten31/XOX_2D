@@ -83,6 +83,14 @@ It is a simple project to gradually get into world of game development. So far s
 ```
 </details>
 
+<details>
+  <summary><h2>Seventh week :sweat_smile:</h2></summary>
+
+```
+- Got pretty sick so I did a little break to play some games 
+- Rethinked developer-side design, how to organize reloading game, quitting, draws etc.
+```
+</details>
 
 # How it works?
 
@@ -111,4 +119,4 @@ It is a simple project to gradually get into world of game development. So far s
 </details>
 
 # What I have learned?
-- To properly connect version control...
+- To properly connect version control next time...
