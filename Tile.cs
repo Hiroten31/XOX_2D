@@ -26,10 +26,12 @@ public class Tile : MonoBehaviour {
     // true as "X"
     private void OnMouseDown() {
         if (tileSet == false) {
-            if (GameManager.playerTurn) {
+            if (GameManager.playerTurn) { 
                 _X.SetActive(true);
+                GridManager.IncreaseMove();
             } else {
                 _O.SetActive(true);
+                GridManager.IncreaseMove();
             }
             tileSet = true;
             GridManager.CheckIfWin(this);
