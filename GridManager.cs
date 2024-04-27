@@ -1,4 +1,6 @@
+using JetBrains.Annotations;
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
 using Unity.Collections.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -11,6 +13,7 @@ public class GridManager : MonoBehaviour {
 
     private static int _square;
     private static float offsetPosition;
+    private static int moveCounter;
 
     public void GenerateGrid() {
         _square = GameManager.GetGridSize();
@@ -19,6 +22,7 @@ public class GridManager : MonoBehaviour {
             offsetPosition -= 0.5f;
         }
         //Debug.Log(offsetPosition);
+        moveCounter = 0;
         _tiles = new Dictionary<Vector2, Tile>();
         for (float x = 0 - offsetPosition; x < _square - offsetPosition; x++) {
             for (float y = 0 - offsetPosition; y < _square - offsetPosition; y++) {
@@ -42,6 +46,14 @@ public class GridManager : MonoBehaviour {
         }*/
     }
 
+    public static void IncreaseMove() {
+        moveCounter++;
+        if(moveCounter >= _square * _square) {
+            Debug.Log("You ran out of possible moves!\nGAME ENDED!");
+            StopGame();
+        }
+    }
+
     public Tile GetTileAtPosition(Vector2 position) {
         if (_tiles.TryGetValue(position, out Tile tile))
             return tile;
@@ -60,6 +72,7 @@ public class GridManager : MonoBehaviour {
                 //Debug.Log("=================" + win);
                 if (win == _square) {
                     Debug.Log("YOU WON!");
+                    StopGame();
                     break;
                 }
             }
@@ -75,6 +88,7 @@ public class GridManager : MonoBehaviour {
                 //Debug.Log("=================" + win);
                 if (win == _square) {
                     Debug.Log("YOU WON!");
+                    StopGame();
                     break;
                 }
             };
@@ -89,6 +103,7 @@ public class GridManager : MonoBehaviour {
                 //Debug.Log("=================" + win);
                 if (win == _square) {
                     Debug.Log("YOU WON!");
+                    StopGame();
                     break;
                 }
             };
@@ -103,6 +118,7 @@ public class GridManager : MonoBehaviour {
                 //Debug.Log("=================" + win);
                 if (win == _square) {
                     Debug.Log("YOU WON!");
+                    StopGame();
                     break;
                 }
             };
@@ -110,5 +126,14 @@ public class GridManager : MonoBehaviour {
 
         //Debug.Log("clickedTile, x: " + clickedTile.transform.position.x + ", y: " + clickedTile.transform.position.y);
         return true;
+    }
+
+    public static void StopGame() {
+        //maybe just switch here instead of 'ifs'?
+        //if moveCounter == limit -> BIG "PLAY AGAIN?" BUTTON
+        //if playerTurn and GameWinner are set, BIG "PLAY AGAIN?" BUTTON
+        //in both cases it takes us to SETTINGS with slider and other game settings.
+
+        //if not any above, just return to main menu.
     }
 }
