@@ -28,14 +28,13 @@ public class Tile : MonoBehaviour {
         if (tileSet == false) {
             if (GameManager.playerTurn) { 
                 _X.SetActive(true);
-                GridManager.IncreaseMove();
             } else {
                 _O.SetActive(true);
-                GridManager.IncreaseMove();
             }
             tileSet = true;
             GridManager.CheckIfWin(this);
             GameManager.playerTurn = !GameManager.playerTurn;
+            GridManager.IncreaseMove();
         } else {
             Debug.Log(this.name + " is already set!");
         }
