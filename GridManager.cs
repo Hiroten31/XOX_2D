@@ -7,7 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 public class GridManager : MonoBehaviour {
-
+    [SerializeField] private TextBoxManager textBoxManager;
     [SerializeField] private Tile _tilePrefab;
 
     private static Dictionary<Vector2, Tile> _tiles;
@@ -15,6 +15,8 @@ public class GridManager : MonoBehaviour {
     private static int _square;
     private static float offsetPosition;
     private static int moveCounter;
+
+    static TextBoxManager textBox;
 
     public void GenerateGrid() {
         _square = GameManager.GetGridSize();
@@ -25,6 +27,7 @@ public class GridManager : MonoBehaviour {
         //Debug.Log(offsetPosition);
         moveCounter = 0;
         _tiles = new Dictionary<Vector2, Tile>();
+        textBox = textBoxManager;
         this.transform.position = new Vector2(0, 0);
         this.transform.localScale = new Vector2(1, 1);
         for (float x = 0 - offsetPosition; x < _square - offsetPosition; x++) {
@@ -74,6 +77,7 @@ public class GridManager : MonoBehaviour {
                 win++;
                 //Debug.Log("=================" + win);
                 if (win == _square) {
+                    textBox.StartTextBox("YOU WON!");
                     Debug.Log("YOU WON!");
                     StopGame();
                     return true;
@@ -89,6 +93,7 @@ public class GridManager : MonoBehaviour {
                 win++;
                 //Debug.Log("=================" + win);
                 if (win == _square) {
+                    textBox.StartTextBox("YOU WON!");
                     Debug.Log("YOU WON!");
                     StopGame();
                     return true;
@@ -104,7 +109,7 @@ public class GridManager : MonoBehaviour {
                 win++;
                 //Debug.Log("=================" + win);
                 if (win == _square) {
-                    Debug.Log("YOU WON!");
+                    textBox.StartTextBox("YOU WON!");
                     StopGame();
                     return true;
                 }
@@ -119,6 +124,7 @@ public class GridManager : MonoBehaviour {
                 win++;
                 //Debug.Log("=================" + win);
                 if (win == _square) {
+                    textBox.StartTextBox("YOU WON!");
                     Debug.Log("YOU WON!");
                     StopGame();
                     return true;
