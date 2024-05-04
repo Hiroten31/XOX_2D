@@ -13,16 +13,15 @@ public class TextBoxManager : MonoBehaviour {
 
     private void Start() {
         text.text = string.Empty;
-        StartTextBox();
     }
 
-    void StartTextBox() {
+    public void StartTextBox(string msg) {
         index = 0;
-        StartCoroutine(TypeLine());
+        StartCoroutine(TypeLine(msg));
     }
 
-    IEnumerator TypeLine() {
-        foreach (char c in textCharacters[index].ToCharArray()) {
+    public IEnumerator TypeLine(string msg) {
+        foreach (char c in msg.ToCharArray()) {
             text.text += c;
             yield return new WaitForSeconds(textSpeed);
         }
