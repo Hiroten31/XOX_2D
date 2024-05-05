@@ -57,7 +57,6 @@ public class GridManager : MonoBehaviour {
         moveCounter++;
         if(moveCounter >= _square * _square) {
             Debug.Log("You ran out of possible moves!\nGAME ENDED!");
-            StopGame();
         }
     }
 
@@ -79,7 +78,6 @@ public class GridManager : MonoBehaviour {
                 if (win == _square) {
                     textBox.StartTextBox("YOU WON!");
                     Debug.Log("YOU WON!");
-                    StopGame();
                     return true;
                 }
             }
@@ -95,7 +93,6 @@ public class GridManager : MonoBehaviour {
                 if (win == _square) {
                     textBox.StartTextBox("YOU WON!");
                     Debug.Log("YOU WON!");
-                    StopGame();
                     return true;
                 }
             }
@@ -110,7 +107,7 @@ public class GridManager : MonoBehaviour {
                 //Debug.Log("=================" + win);
                 if (win == _square) {
                     textBox.StartTextBox("YOU WON!");
-                    StopGame();
+                    Debug.Log("YOU WON!");
                     return true;
                 }
             }
@@ -126,7 +123,6 @@ public class GridManager : MonoBehaviour {
                 if (win == _square) {
                     textBox.StartTextBox("YOU WON!");
                     Debug.Log("YOU WON!");
-                    StopGame();
                     return true;
                 }
             }
@@ -150,6 +146,7 @@ public class GridManager : MonoBehaviour {
                 }
             }
             _tiles.Clear();
+            textBox.EmptyTextBox();
         }
         
         //if not any above, just return to main menu.
