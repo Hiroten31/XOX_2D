@@ -92,6 +92,17 @@ It is a simple project to gradually get into world of game development. So far s
 ```
 </details>
 
+<details>
+  <summary><h2>Eigth week</h2></summary>
+
+```
+- Added textBoxManager
+- Reformed and added usage of textBox to properly display needed text
+- Working a little around StopGame()
+```
+</details>
+
+
 # How it works?
 
 
