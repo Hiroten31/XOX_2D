@@ -47,7 +47,7 @@ public class GridManager : MonoBehaviour {
         }
         this.transform.position = new Vector2(-4, 0);
         this.transform.localScale = new Vector2(9f / _square, 9f / _square);
-
+        textBox.StartTextBox("GOOD LUCK!"); // a test message
         /*foreach (var (key, value) in _tiles) {
             Debug.Log("a Tile key: " + key);
         }*/
@@ -55,8 +55,9 @@ public class GridManager : MonoBehaviour {
 
     public static void IncreaseMove() {
         moveCounter++;
-        if(moveCounter >= _square * _square) {
-            Debug.Log("You ran out of possible moves!\nGAME ENDED!");
+        if(moveCounter >= _square * _square && GameManager.gameState != 2) {
+            textBox.StartTextBox("You ran out of possible moves!\nGAME ENDED!");
+            StopGame();
         }
     }
 
@@ -77,6 +78,7 @@ public class GridManager : MonoBehaviour {
                 //Debug.Log("=================" + win);
                 if (win == _square) {
                     textBox.StartTextBox("YOU WON!");
+                    StopGame();
                     Debug.Log("YOU WON!");
                     return true;
                 }
@@ -92,6 +94,7 @@ public class GridManager : MonoBehaviour {
                 //Debug.Log("=================" + win);
                 if (win == _square) {
                     textBox.StartTextBox("YOU WON!");
+                    StopGame();
                     Debug.Log("YOU WON!");
                     return true;
                 }
@@ -107,6 +110,7 @@ public class GridManager : MonoBehaviour {
                 //Debug.Log("=================" + win);
                 if (win == _square) {
                     textBox.StartTextBox("YOU WON!");
+                    StopGame();
                     Debug.Log("YOU WON!");
                     return true;
                 }
@@ -122,6 +126,7 @@ public class GridManager : MonoBehaviour {
                 //Debug.Log("=================" + win);
                 if (win == _square) {
                     textBox.StartTextBox("YOU WON!");
+                    StopGame();
                     Debug.Log("YOU WON!");
                     return true;
                 }
@@ -133,12 +138,15 @@ public class GridManager : MonoBehaviour {
     }
 
     public static void StopGame() {
+        GameManager.gameState = 2;
+    }
 
+    public static void EndGame() {
         //maybe just switch here instead of 'ifs'?
         //if moveCounter == limit -> BIG "PLAY AGAIN?" BUTTON
         //if playerTurn and GameWinner are set, BIG "PLAY AGAIN?" BUTTON
         //in both cases it takes us to SETTINGS with slider and other game settings.
-        if(_tiles.Count > 0) {
+        if (_tiles.Count > 0) {
             for (float x = 0 - offsetPosition; x < _square - offsetPosition; x++) {
                 for (float y = 0 - offsetPosition; y < _square - offsetPosition; y++) {
                     Tile tileToDestroy = _tiles[new Vector2(x, y)];
@@ -147,8 +155,9 @@ public class GridManager : MonoBehaviour {
             }
             _tiles.Clear();
             textBox.EmptyTextBox();
+            GameManager.gameState = 0;
         }
-        
+
         //if not any above, just return to main menu.
     }
 }
