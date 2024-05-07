@@ -8,10 +8,6 @@ public class TextBoxManager : MonoBehaviour {
     public TextMeshProUGUI text;
     public float textSpeed;
 
-    private void Start() {
-        text.text = string.Empty;
-    }
-
     public void EmptyTextBox() {
         StopAllCoroutines();
         text.text = string.Empty;
@@ -26,6 +22,7 @@ public class TextBoxManager : MonoBehaviour {
             text.text += c;
             yield return new WaitForSeconds(textSpeed);
         }
+        text.text += "\n";
     }
 
 }
