@@ -19,29 +19,35 @@ public class Tile : MonoBehaviour {
     }
 
     private void OnMouseEnter() {
-        _highlight.SetActive(true);
+        if(GameManager.gameState != 2) {
+            _highlight.SetActive(true);
+        }
     }
 
     // false as "O"
     // true as "X"
     private void OnMouseDown() {
-        if (tileSet == false) {
-            if (GameManager.playerTurn) { 
-                _X.SetActive(true);
+        if (GameManager.gameState != 2) {
+            if (tileSet == false) {
+                if (GameManager.playerTurn) {
+                    _X.SetActive(true);
+                } else {
+                    _O.SetActive(true);
+                }
+                tileSet = true;
+                GridManager.CheckIfWin(this);
+                GameManager.playerTurn = !GameManager.playerTurn;
+                GridManager.IncreaseMove();
             } else {
-                _O.SetActive(true);
+                Debug.Log(this.name + " is already set!");
             }
-            tileSet = true;
-            GridManager.CheckIfWin(this);
-            GameManager.playerTurn = !GameManager.playerTurn;
-            GridManager.IncreaseMove();
-        } else {
-            Debug.Log(this.name + " is already set!");
         }
+        
     }
 
     private void OnMouseExit() {
-        _highlight.SetActive(false);
+        if (GameManager.gameState != 2)
+            _highlight.SetActive(false);
     }
 
     public bool GetTileState(Tile tileUnderCheck) {
