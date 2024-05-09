@@ -9,6 +9,8 @@ using UnityEngine;
 public class GridManager : MonoBehaviour {
     [SerializeField] private TextBoxManager textBoxManager;
     [SerializeField] private Tile _tilePrefab;
+    [SerializeField] public MoveDisplay moveDisplay;
+
 
     private static Dictionary<Vector2, Tile> _tiles;
 
@@ -17,6 +19,8 @@ public class GridManager : MonoBehaviour {
     private static int moveCounter;
 
     static TextBoxManager textBox;
+    static MoveDisplay display;
+
 
     public void GenerateGrid() {
         _square = GameManager.GetGridSize();
@@ -24,9 +28,10 @@ public class GridManager : MonoBehaviour {
         if (_square % 2 == 0) {
             offsetPosition -= 0.5f;
         }
-        //Debug.Log(offsetPosition);
+        Debug.Log(offsetPosition);
         moveCounter = 0;
         _tiles = new Dictionary<Vector2, Tile>();
+        display = moveDisplay;
         textBox = textBoxManager;
         this.transform.position = new Vector2(0, 0);
         this.transform.localScale = new Vector2(1, 1);
@@ -59,6 +64,7 @@ public class GridManager : MonoBehaviour {
             textBox.StartTextBox("You ran out of possible moves!\nGAME ENDED!");
             StopGame();
         }
+        display.ChangeDisplay();
     }
 
     public Tile GetTileAtPosition(Vector2 position) {
