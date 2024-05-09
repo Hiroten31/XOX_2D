@@ -46,8 +46,7 @@ public class Tile : MonoBehaviour {
     }
 
     private void OnMouseExit() {
-        if (GameManager.gameState != 2)
-            _highlight.SetActive(false);
+        _highlight.SetActive(false);
     }
 
     public bool GetTileState(Tile tileUnderCheck) {
