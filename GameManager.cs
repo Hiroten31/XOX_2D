@@ -14,7 +14,9 @@ public class GameManager : MonoBehaviour {
 
     // false as "O"
     // true as "X"
-    public static bool playerTurn = false;
+    public static bool playerTurn = true;
+
+    public static int gameWinner;
 
     public void Awake() {
         Instance = this;
