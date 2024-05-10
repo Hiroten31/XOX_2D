@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
 using System.Data;
+using TMPro.EditorUtilities;
 using Unity.Collections.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -9,8 +10,9 @@ using UnityEngine;
 public class GridManager : MonoBehaviour {
     [SerializeField] private TextBoxManager textBoxManager;
     [SerializeField] private Tile _tilePrefab;
-    [SerializeField] public MoveDisplay moveDisplay;
-
+    [SerializeField] private MoveDisplay moveDisplay;
+    [SerializeField] public GameObject Menus;
+    [SerializeField] public static GameObject PLAYAGAIN;
 
     private static Dictionary<Vector2, Tile> _tiles;
 
@@ -21,8 +23,18 @@ public class GridManager : MonoBehaviour {
     static TextBoxManager textBox;
     static MoveDisplay display;
 
+    private static GameObject PLAY;
+    private static GameObject QUIT;
 
     public void GenerateGrid() {
+        GameManager.gameState = 1;
+        GameManager.gameWinner = -1;
+        PLAYAGAIN = Menus.transform.Find("PlayAgain").gameObject;
+        PLAY = GameObject.Find("Menus/GameMenu/PLAY");
+        QUIT = GameObject.Find("Menus/GameMenu/QUIT");
+        PLAY.SetActive(true);
+        QUIT.SetActive(true);
+        PLAYAGAIN.SetActive(false);
         _square = GameManager.GetGridSize();
         offsetPosition = _square / 2;
         if (_square % 2 == 0) {
@@ -74,14 +86,13 @@ public class GridManager : MonoBehaviour {
     }
 
     public static bool CheckIfWin(Tile clickedTile) {
+
         int win = 0;
         // Checking horizontal line
         for (float i = 0 - offsetPosition; i < _square - offsetPosition; i++) {
             Tile readTile = _tiles[new Vector2(i, clickedTile.transform.localPosition.y)];
             if (clickedTile.GetTileState(readTile)) {
-                //Debug.Log("Horizontal: " + clickedTile.transform.position.x + " " + clickedTile.transform.position.y + " = " + readTile.transform.position.x + " " + readTile.transform.position.y);
                 win++;
-                //Debug.Log("=================" + win);
                 if (win == _square) {
                     textBox.StartTextBox("YOU WON!");
                     StopGame();
@@ -90,14 +101,13 @@ public class GridManager : MonoBehaviour {
                 }
             }
         }
+
         win = 0;
         // Checking vertical line
         for (float i = 0 - offsetPosition; i < _square - offsetPosition; i++) {
             Tile readTile = _tiles[new Vector2(clickedTile.transform.localPosition.x, i)];
             if (clickedTile.GetTileState(readTile)) {
-                //Debug.Log("Vertical: " + clickedTile.transform.position.x + " " + clickedTile.transform.position.y + " = " + readTile.transform.position.x + " " + readTile.transform.position.y);
                 win++;
-                //Debug.Log("=================" + win);
                 if (win == _square) {
                     textBox.StartTextBox("YOU WON!");
                     StopGame();
@@ -106,14 +116,13 @@ public class GridManager : MonoBehaviour {
                 }
             }
         }
+
         win = 0;
         // Checking diagonal /
         for (float i = 0 - offsetPosition; i < _square - offsetPosition; i++) {
             Tile readTile = _tiles[new Vector2(i, i)];
             if (clickedTile.GetTileState(readTile)) {
-                //Debug.Log("Vertical: " + clickedTile.transform.position.x + " " + clickedTile.transform.position.y + " = " + readTile.transform.position.x + " " + readTile.transform.position.y);
                 win++;
-                //Debug.Log("=================" + win);
                 if (win == _square) {
                     textBox.StartTextBox("YOU WON!");
                     StopGame();
@@ -122,14 +131,13 @@ public class GridManager : MonoBehaviour {
                 }
             }
         }
+
         win = 0;
         // Checking diagonal \
         for (float i = 0; i < _square; i++) {
             Tile readTile = _tiles[new Vector2(i - offsetPosition, _square - 1 - i - offsetPosition)];
             if (clickedTile.GetTileState(readTile)) {
-                //Debug.Log("Vertical: " + clickedTile.transform.position.x + " " + clickedTile.transform.position.y + " = " + readTile.transform.position.x + " " + readTile.transform.position.y);
                 win++;
-                //Debug.Log("=================" + win);
                 if (win == _square) {
                     textBox.StartTextBox("YOU WON!");
                     StopGame();
@@ -139,11 +147,20 @@ public class GridManager : MonoBehaviour {
             }
         }
 
-        //Debug.Log("clickedTile, x: " + clickedTile.transform.position.x + ", y: " + clickedTile.transform.position.y);
         return false;
     }
 
     public static void StopGame() {
+        if(GameManager.playerTurn) {
+            GameManager.gameWinner = 0;
+        } else {
+            GameManager.gameWinner = 1;
+        }
+        if (GameManager.gameWinner != -1 || (moveCounter >= _square * _square && GameManager.gameState != 2)) {
+            PLAY.SetActive(false);
+            QUIT.SetActive(false);
+            PLAYAGAIN.SetActive(true);
+        }
         GameManager.gameState = 2;
     }
 
