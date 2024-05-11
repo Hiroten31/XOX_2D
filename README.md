@@ -87,7 +87,7 @@ It is a simple project to gradually get into world of game development. So far s
   <summary><h2>Seventh week :sweat_smile:</h2></summary>
 
 ```
-- Got pretty sick so I did a little break to play some games 
+- Got pretty sick so I did a little break to play some games ❤️‍🔥
 - Rethinked developer-side design, how to organize reloading game, quitting, draws etc.
 ```
 </details>
@@ -102,6 +102,16 @@ It is a simple project to gradually get into world of game development. So far s
 ```
 </details>
 
+<details>
+  <summary><h2>Ninth week</h2></summary>
+
+```
+- Fixed textBoxManager bug, where first letter would dissapear
+- Added MoveDisplay to inform player about which player is on the move
+- Set new menu which appears on the middle of screen after game has been settled
+- Added GameState and gameWinner to keep the track of state of the game winner
+```
+</details>
 
 # How it works?
 
