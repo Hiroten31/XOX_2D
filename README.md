@@ -114,16 +114,26 @@ It is a simple project to gradually get into world of game development. So far s
 </details>
 
 # How it works?
-
+Links to resources and videos that has helped me:
+> https://deep-fold.itch.io/space-background-generator
+> 
+> https://helianthus-games.itch.io/pixel-art-planets
+> 
+> https://www.youtube.com/watch?v=kkAjpQAM-jE
+> 
+> https://www.youtube.com/watch?v=4I0vonyqMi8
+> 
+> https://www.youtube.com/watch?v=nTLgzvklgU8
 
 # Screenshots 
 <details>
   <summary>(in work)</summary>
 
+<details>
+  <summary>(old work)</summary>
+
 ### Gameplay scene set-up
 ![image](https://github.com/Hiroten31/XOX_2D/assets/97809912/a2667ce4-c611-4609-b832-96b7e6b8cb65)
-
-
 
 ### Main menu 
 ![image](https://github.com/Hiroten31/XOX_2D/assets/97809912/a90e5851-d197-4eb5-ba7a-18556bdcbf2b)
@@ -131,12 +141,31 @@ It is a simple project to gradually get into world of game development. So far s
 ### Settings menu
 ![image](https://github.com/Hiroten31/XOX_2D/assets/97809912/23bb020a-f41f-42be-bf88-25cebae34b22)
 
-
 ### Grid generation
 ![image](https://github.com/Hiroten31/XOX_2D/assets/97809912/f006a818-5499-431a-866d-39817281ca76)
 
 ### Example of gameplay (sprite placeholders)
 ![image](https://github.com/Hiroten31/XOX_2D/assets/97809912/44e262b6-bc15-4841-a472-debd7a17d3e4)
+
+</details>
+
+<details>
+  <summary>(new work)</summary>
+
+### Gameplay scene set-up
+![image](https://github.com/Hiroten31/XOX_2D/assets/97809912/f4ee3562-6718-4b3b-9eda-c327ef0c21f9)
+
+### Settings menu
+![image](https://github.com/Hiroten31/XOX_2D/assets/97809912/c6baccaf-1a6f-4302-b0e1-fee1c03370bb)
+
+### Grid generation
+![image](https://github.com/Hiroten31/XOX_2D/assets/97809912/d8a9671d-8091-4a5d-81e9-ce736eb62833)
+
+### Example of gameplay (sprite placeholders)
+![image](https://github.com/Hiroten31/XOX_2D/assets/97809912/8e0d19f3-0a47-41ec-8e6e-dbc19d7cafd8)
+
+</details>
+
 </details>
 
 # What I have learned?
