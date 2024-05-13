@@ -4,38 +4,41 @@ using UnityEngine;
 
 public class TextureChange : MonoBehaviour {
 
-    public Sprite mySprite1;
-
     // And done with a list!
     [SerializeField] List<Sprite> mySprites = new List<Sprite>();
 
+    public Sprite mySprite;
+    public float timeToFade;
+    private bool change = false;
+
     // Start is called before the first frame update
     void Start() {
+
     }
 
     // Update is called once per frame
     void Update() {
         if (Input.GetKeyDown(KeyCode.Space)) {
-            GetComponent<SpriteRenderer>().sprite = mySprite1;
-            Debug.Log("KEYCODE.SPACE!");
+            change = true;
         }
-        if (Input.GetKeyDown(KeyCode.W)) {
-            int random = Random.Range(0, mySprites.Count);
-            while (mySprites[random] == GetComponent<SpriteRenderer>().sprite) {
+        if(change) {
+            int random;
+            do {
                 random = Random.Range(0, mySprites.Count);
-            }
+            } while (mySprites[random] == GetComponent<SpriteRenderer>().sprite);
+            Debug.Log("2 Sprite name: " + GetComponent<SpriteRenderer>().sprite.name);
+            Color colorSprite = GetComponent<SpriteRenderer>().color;
+            colorSprite.a -= Time.deltaTime * timeToFade;
             GetComponent<SpriteRenderer>().sprite = mySprites[random];
-            if(random%2  == 0) {
-                GetComponent<SpriteRenderer>().flipX = true;
-            } else {
-                GetComponent<SpriteRenderer>().flipX = false;
-            }
-            if (random % 3 == 0) {
-                GetComponent<SpriteRenderer>().flipY = true;
-            } else {
-                GetComponent<SpriteRenderer>().flipY = false;
-            }
-            Debug.Log("KEYCODE.W! Sprite name: " + GetComponent<SpriteRenderer>().sprite.name);
+            colorSprite = GetComponent<SpriteRenderer>().color;
+            colorSprite.a += Time.deltaTime * timeToFade;
+            Debug.Log("3 Sprite name: " + GetComponent<SpriteRenderer>().sprite.name);
+            change = false;
         }
     }
+    
+    void textureChange() {
+        change = true;
+    }
+
 }
