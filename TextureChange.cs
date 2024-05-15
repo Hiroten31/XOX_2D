@@ -11,6 +11,11 @@ public class TextureChange : MonoBehaviour {
     public float timeToFade;
     private bool change = false;
 
+    private Color FadeOut;
+    private Color FadeIn;
+    private SpriteRenderer spriteToFadeOut;
+    private SpriteRenderer spriteToFadeIn;
+
     // Start is called before the first frame update
     void Start() {
 
@@ -19,26 +24,30 @@ public class TextureChange : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if (Input.GetKeyDown(KeyCode.Space)) {
-            change = true;
+            TextureFade();
         }
         if(change) {
-            int random;
-            do {
-                random = Random.Range(0, mySprites.Count);
-            } while (mySprites[random] == GetComponent<SpriteRenderer>().sprite);
-            Debug.Log("2 Sprite name: " + GetComponent<SpriteRenderer>().sprite.name);
-            Color colorSprite = GetComponent<SpriteRenderer>().color;
-            colorSprite.a -= Time.deltaTime * timeToFade;
-            GetComponent<SpriteRenderer>().sprite = mySprites[random];
-            colorSprite = GetComponent<SpriteRenderer>().color;
-            colorSprite.a += Time.deltaTime * timeToFade;
-            Debug.Log("3 Sprite name: " + GetComponent<SpriteRenderer>().sprite.name);
-            change = false;
+            FadeOut.a -= Time.deltaTime * timeToFade;
+            spriteToFadeOut.color = FadeOut;
+            FadeIn.a += Time.deltaTime * timeToFade;
+            spriteToFadeIn.color = FadeIn;
+            if (FadeIn.a == 1 && FadeOut.a == 0) {
+                change = false;
+            }
         }
     }
     
-    void textureChange() {
+    void TextureFade() {
         change = true;
+        int random;
+        do {
+            random = Random.Range(0, mySprites.Count);
+        } while (mySprites[random] == GetComponent<SpriteRenderer>().sprite);
+        SpriteRenderer spriteToFadeOut = GetComponent<SpriteRenderer>();
+        Color FadeOut = spriteToFadeOut.color;
+        GetComponent<SpriteRenderer>().sprite = mySprites[random];
+        SpriteRenderer spriteToFadeIn = GetComponent<SpriteRenderer>();
+        Color FadeIn = spriteToFadeIn.color;
+        GetComponent<SpriteRenderer>().sprite = spriteToFadeOut.sprite;
     }
-
 }
