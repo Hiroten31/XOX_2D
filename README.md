@@ -113,6 +113,16 @@ It is a simple project to gradually get into world of game development. So far s
 ```
 </details>
 
+<details>
+  <summary><h2>Tenth week</h2></summary>
+
+```
+- Done first build - had to fix some hidden errors
+- Trying to make FadeIn and FadeOut on textures (multiple SpriteRenderers problem)
+- And some student's parties
+```
+</details>
+
 # How it works?
 Links to resources and videos that has helped me:
 > https://deep-fold.itch.io/space-background-generator
