@@ -10,6 +10,7 @@ public class TextureChange : MonoBehaviour {
 
     public Sprite mySprite;
     public float timeToFade;
+    int i = 0;
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Space)) {
@@ -35,6 +36,7 @@ public class TextureChange : MonoBehaviour {
             _sprite.color = tempColor;
             if(tempColor.a <= 0f) {
                 tempColor.a = 0.0f;
+                // Here my sprite is overwritten .-.
             }
             yield return null;
         }
@@ -52,8 +54,13 @@ public class TextureChange : MonoBehaviour {
             _sprite.color = tempColor;
             if (tempColor.a >= 1f) {
                 tempColor.a = 1.0f;
-                //SpriteRenderer parentSprite =_sprite.transform.parent.GetComponent<SpriteRenderer>();
-                //parentSprite.sprite = _sprite.sprite;
+                SpriteRenderer parentSprite = _sprite.transform.parent.GetComponent<SpriteRenderer>();
+                parentSprite = _sprite;
+                Color parentColor = parentSprite.color;
+                parentColor.a = 1.0f;
+                // Here it still takes Clone instead of Parent
+                Debug.Log("Parent sprite: " + parentSprite.name + ": " + parentSprite.sprite.name + " vs Child sprite: " + _sprite.name + ": " + _sprite.sprite.name);
+                StopCoroutine(TextureFadeOut(parentSprite));
             }
             yield return null;
         }
