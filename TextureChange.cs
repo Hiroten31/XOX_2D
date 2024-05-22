@@ -18,52 +18,31 @@ public class TextureChange : MonoBehaviour {
         }
     }
     void StartTextureChange() {
-        StartCoroutine(TextureFadeOut(GetComponent<SpriteRenderer>()));
+        StartCoroutine(TextureFadeOut());
+        StartCoroutine(TextureFadeIn());
+    }
+    
+    IEnumerator TextureFadeOut() {
+        Debug.Log("Started TextureFadeOut()");
+        SpriteRenderer _sprite = GetComponent<SpriteRenderer>();
+        yield return null;
+    }
+
+    IEnumerator TextureFadeIn() {
+        Debug.Log("Started TextureFadeIn()");
         int random;
         do {
             random = Random.Range(0, mySprites.Count);
         } while (mySprites[random] == GetComponent<SpriteRenderer>().sprite);
-        SpriteRenderer tempSprite = Instantiate(GetComponent<SpriteRenderer>(), transform);
-        tempSprite.sprite = mySprites[random];
-        StartCoroutine(TextureFadeIn(tempSprite));
-    }
-    
-    IEnumerator TextureFadeOut(SpriteRenderer _sprite) {
-        Debug.Log("Started TextureFadeOut()");
-        Color tempColor = _sprite.color;
-        while(tempColor.a <= 1f) {
-            tempColor.a -= Time.deltaTime / timeToFade;
-            _sprite.color = tempColor;
-            if(tempColor.a <= 0f) {
-                tempColor.a = 0.0f;
-                // Here my sprite is overwritten .-.
-            }
-            yield return null;
-        }
-        _sprite.color = tempColor;
-    }
-
-    IEnumerator TextureFadeIn(SpriteRenderer _sprite) {
-        Debug.Log("Started TextureFadeIn()");
-        Color tempColor = _sprite.color;
-        _sprite.color = new Color(255, 255, 255, 0);
+        SpriteRenderer _spriteIn = Instantiate(GetComponent<SpriteRenderer>(), transform);
+        _spriteIn.sprite = mySprites[random];
+        SpriteRenderer _spriteOut = _spriteIn.transform.parent.GetComponent<SpriteRenderer>();
+        Debug.Log("Parent sprite " + _spriteIn.transform.parent.name + " : " + _spriteIn.transform.parent.GetComponent<SpriteRenderer>().sprite.name + ", Child sprite " + _spriteIn.name + " :" + _spriteIn.sprite.name);
+        _spriteOut.sprite = _spriteIn.sprite;
         //_sprite.name = "Child Sprite";
         //Debug.Log("Parent name: " + _sprite.transform.parent.name);
-        while (tempColor.a >= 0f) {
-            tempColor.a += Time.deltaTime / timeToFade;
-            _sprite.color = tempColor;
-            if (tempColor.a >= 1f) {
-                tempColor.a = 1.0f;
-                SpriteRenderer parentSprite = _sprite.transform.parent.GetComponent<SpriteRenderer>();
-                parentSprite = _sprite;
-                Color parentColor = parentSprite.color;
-                parentColor.a = 1.0f;
-                // Here it still takes Clone instead of Parent
-                Debug.Log("Parent sprite: " + parentSprite.name + ": " + parentSprite.sprite.name + " vs Child sprite: " + _sprite.name + ": " + _sprite.sprite.name);
-                StopCoroutine(TextureFadeOut(parentSprite));
-            }
-            yield return null;
-        }
-        _sprite.color = tempColor;
+        Destroy(_spriteOut);
+        yield return null;
+        
     }
 }
