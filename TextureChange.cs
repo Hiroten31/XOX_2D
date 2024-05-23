@@ -41,7 +41,7 @@ public class TextureChange : MonoBehaviour {
         _spriteOut.sprite = _spriteIn.sprite;
         //_sprite.name = "Child Sprite";
         //Debug.Log("Parent name: " + _sprite.transform.parent.name);
-        Destroy(_spriteOut);
+        Destroy(_spriteIn.gameObject);
         yield return null;
         
     }
