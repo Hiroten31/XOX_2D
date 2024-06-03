@@ -38,11 +38,21 @@ public class TextureChange : MonoBehaviour {
         _spriteIn.sprite = mySprites[random];
         SpriteRenderer _spriteOut = _spriteIn.transform.parent.GetComponent<SpriteRenderer>();
         Debug.Log("Parent sprite " + _spriteIn.transform.parent.name + " : " + _spriteIn.transform.parent.GetComponent<SpriteRenderer>().sprite.name + ", Child sprite " + _spriteIn.name + " :" + _spriteIn.sprite.name);
+        Color tempColor = _spriteOut.color;
+        while (tempColor.a <= 1f && tempColor.a != 0.0f) {
+            tempColor.a -= Time.deltaTime / timeToFade;
+            _spriteOut.color = tempColor;
+            if (tempColor.a <= 0f) {
+                tempColor.a = 0.0f;
+            }
+            yield return null;
+        }
         _spriteOut.sprite = _spriteIn.sprite;
+        tempColor.a = 1.0f;
+        _spriteOut.color = tempColor;
         //_sprite.name = "Child Sprite";
         //Debug.Log("Parent name: " + _sprite.transform.parent.name);
         Destroy(_spriteIn.gameObject);
         yield return null;
-        
     }
 }
