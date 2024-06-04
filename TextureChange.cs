@@ -35,8 +35,10 @@ public class TextureChange : MonoBehaviour {
             random = Random.Range(0, mySprites.Count);
         } while (mySprites[random] == GetComponent<SpriteRenderer>().sprite);
         SpriteRenderer _spriteIn = Instantiate(GetComponent<SpriteRenderer>(), transform);
+        _spriteIn.transform.position = new Vector3(_spriteIn.transform.position.x, _spriteIn.transform.position.y, 0.0f);
         _spriteIn.sprite = mySprites[random];
         SpriteRenderer _spriteOut = _spriteIn.transform.parent.GetComponent<SpriteRenderer>();
+        _spriteOut.transform.position = new Vector3(_spriteOut.transform.position.x, _spriteOut.transform.position.y, -0.1f);
         Debug.Log("Parent sprite " + _spriteIn.transform.parent.name + " : " + _spriteIn.transform.parent.GetComponent<SpriteRenderer>().sprite.name + ", Child sprite " + _spriteIn.name + " :" + _spriteIn.sprite.name);
         Color tempColor = _spriteOut.color;
         while (tempColor.a <= 1f && tempColor.a != 0.0f) {
