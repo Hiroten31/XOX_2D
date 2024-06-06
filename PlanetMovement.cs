@@ -25,6 +25,7 @@ public class PlanetMovement : MonoBehaviour {
 
     // Variable that controls at which point of trajectory our planet is.
     float angle;
+    Vector3 startPosition;
 
     // Method to get a new set of values for our object.
     void GetNewSetOfValues() {
@@ -44,9 +45,9 @@ public class PlanetMovement : MonoBehaviour {
 
         // Setting secondAnchor in non-visible range including planetSize.
         do {
-            secondAnchor.x = Random.Range(-14f - planetSize, 14f + planetSize);
-            secondAnchor.y = Random.Range(-11f - planetSize, 11f + planetSize);
-        } while ((secondAnchor.x > (-9 - planetSize) && secondAnchor.x < (9 + planetSize)) && (secondAnchor.y > (-5 - planetSize) && secondAnchor.y < (5 + planetSize)));
+            secondAnchor.x = Random.Range(-16f - planetSize, 16f + planetSize);
+            secondAnchor.y = Random.Range(-13.5f - planetSize, 13.5f + planetSize);
+        } while ((secondAnchor.x > (-11 - planetSize) && secondAnchor.x < (11 + planetSize)) && (secondAnchor.y > (-7.5f - planetSize) && secondAnchor.y < (7.5f + planetSize)));
 
         // Calculating the middle point between our two anchors.
         centerAnchor.x = (secondAnchor.x + firstAnchor.x) / 2;
@@ -58,12 +59,14 @@ public class PlanetMovement : MonoBehaviour {
 
         // Setting angle to proper value to make it exactly at secondAnchor coordinates (off-screen).
         angle = Mathf.Acos((secondAnchor.x - centerAnchor.x) / radius);
+        Debug.Log("Start Position: " + startPosition);
         if (secondAnchor.y < 0) {
             angle = -1 * angle;
         }
 
         // Making scale as last to avoid fliching size in visible area.
         transform.localScale = new Vector2(scale, scale);
+        //startPosition = new Vector3(centerAnchor.x + Mathf.Cos(angle) * radius, centerAnchor.y + Mathf.Sin(angle) * radius, transform.position.z);
     }
 
     private void Start() {
@@ -74,9 +77,12 @@ public class PlanetMovement : MonoBehaviour {
         // Using cos() and sin() methods to make planet properly move around in circle.
         float x = centerAnchor.x + Mathf.Cos(angle) * radius;
         float y = centerAnchor.y + Mathf.Sin(angle) * radius;
-        transform.SetPositionAndRotation(new Vector2(x, y), Quaternion.Euler(0, 0, rotation + angle * 20));
+        transform.SetPositionAndRotation(new Vector3(x, y, transform.position.z), Quaternion.Euler(0, 0, rotation + angle * 20));
         angle += speed * Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.R)){
+            GetNewSetOfValues();
+        }
+        if((transform.position - startPosition).sqrMagnitude <= 0.000001f) {
             GetNewSetOfValues();
         }
     }
