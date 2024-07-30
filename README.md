@@ -12,10 +12,13 @@ Markdown:
 
 > [What I have learned](https://github.com/Hiroten31/XOX_2D/edit/main/README.md#what-i-have-learned)
 --->
-# Journal
+# Logbook
 It is a simple project to gradually get into world of game development. So far so good. My journey until now:
+
 <details>
-  <summary><h2>First week</h2></summary>
+  <summary><h2>The Journey :book:</h2></summary>
+<details>
+  <summary><h2>First week :student:</h2></summary>
 
 ```
 - Creating a project
@@ -28,7 +31,7 @@ It is a simple project to gradually get into world of game development. So far s
 </details>
 
 <details>
-  <summary><h2>Second week</h2></summary>
+  <summary><h2>Second week :abacus:</h2></summary>
 
 ```
 - Fighting with proper placement of the planet
@@ -41,7 +44,7 @@ It is a simple project to gradually get into world of game development. So far s
 </details>
 
 <details>
-  <summary><h2>Third week</h2></summary>
+  <summary><h2>Third week :arrow_forward:</h2></summary>
 
 ```
 - Adding buttons to make menu for players
@@ -53,7 +56,7 @@ It is a simple project to gradually get into world of game development. So far s
 </details>
 
 <details>
-  <summary><h2>Fourth week</h2></summary>
+  <summary><h2>Fourth week :brain:</h2></summary>
 
 ```
 - A little break due to easter 🐣 holidays!
@@ -63,7 +66,7 @@ It is a simple project to gradually get into world of game development. So far s
 </details>
 
 <details>
-  <summary><h2>Fifth week</h2></summary>
+  <summary><h2>Fifth week :medal_sports:</h2></summary>
 
 ```
 - Did full logic behing checking if player is making a winning move.
@@ -74,7 +77,7 @@ It is a simple project to gradually get into world of game development. So far s
 </details>
 
 <details>
-  <summary><h2>Sixth week</h2></summary>
+  <summary><h2>Sixth week :video_game:</h2></summary>
 
 ```
 - Refactor offset with a lot of math checking, apparently for nothing as relative position won't need that
@@ -93,7 +96,7 @@ It is a simple project to gradually get into world of game development. So far s
 </details>
 
 <details>
-  <summary><h2>Eigth week</h2></summary>
+  <summary><h2>Eigth week :speech_balloon:</h2></summary>
 
 ```
 - Added textBoxManager
@@ -103,7 +106,7 @@ It is a simple project to gradually get into world of game development. So far s
 </details>
 
 <details>
-  <summary><h2>Ninth week</h2></summary>
+  <summary><h2>Ninth week :plate_with_cutlery:</h2></summary>
 
 ```
 - Fixed textBoxManager bug, where first letter would dissapear
@@ -114,13 +117,24 @@ It is a simple project to gradually get into world of game development. So far s
 </details>
 
 <details>
-  <summary><h2>Tenth week</h2></summary>
+  <summary><h2>Tenth week :house:</h2></summary>
 
 ```
 - Done first build - had to fix some hidden errors
 - Trying to make FadeIn and FadeOut on textures (multiple SpriteRenderers problem)
 - And some student's parties
 ```
+</details>
+</details>
+<details>
+  <summary><h2>The END :stop_sign:</h2></summary>
+
+
+Overall summary:
+- I have created my first, quite simple and easy game. <h6>I have mostly focus on getting to know the Unity's engine and environment - also basic procedures and program functions that exist in GameDev IDEs.</h6>
+- I especially haven't follow any particular guide to create it. <h6>I have used different videos and approaches to better implent different components into one game. That helped a lot in planning how to make new stuff versitile enough to be used in many cases - but also slowed the process by a lot. </h6>
+- I didn't really completed the game as I wanted. <h6>Due to almost 2 months long break caused by studies, exams, different projects and holidays :)
+That's why I am ending this project for now, leaving it in a state of working Tic-Tac-Toe game with few minor flaws and unfinished, creative outburts of improvements I wanted to implement.</h6>
 </details>
 
 # How it works?
